@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>醫美產品手冊・整型項目分類頁 — 張穎華</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F3ED;
+    --ink:#1C1B19;
+    --clay:#8B3A2F;
+    --sage:#4A5D53;
+    --brass:#C9A876;
+    --paper-dim:#EFE9DF;
+    --line: rgba(28,27,25,0.12);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans TC', sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+
+  h1,h2,h3{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- 溫紋分隔線（淬火意象：黏土紅 → 山苔綠）---------- */
+  .temper-rule{
+    height:2px;
+    width:100%;
+    background:linear-gradient(90deg, var(--clay) 0%, var(--brass) 45%, var(--sage) 100%);
+    opacity:0.85;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(247,243,237,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  .logo{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:20px;
+  }
+  .logo span{ color:var(--clay); }
+  .navlinks{
+    display:flex;
+    gap:36px;
+    font-size:14px;
+  }
+  .navlinks a{
+    position:relative;
+    padding-bottom:4px;
+    opacity:0.75;
+    transition:opacity .2s;
+  }
+  .navlinks a:hover{ opacity:1; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:120px 0 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    font-size:12px;
+    color:var(--clay);
+    margin-bottom:28px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .hero-eyebrow::before{
+    content:'';
+    width:28px;
+    height:1px;
+    background:var(--clay);
+  }
+  .hero h1{
+    font-size:clamp(38px, 6vw, 68px);
+    line-height:1.25;
+    max-width:16ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--clay);
+  }
+  .hero-sub{
+    margin-top:28px;
+    max-width:52ch;
+    font-size:17px;
+    color:rgba(28,27,25,0.72);
+  }
+  .hero-tags{
+    margin-top:40px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .tag{
+    font-size:12px;
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:100px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.4);
+  }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:44px;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .section-num{
+    font-size:12px;
+    color:var(--sage);
+  }
+  .section-head h2{
+    font-size:clamp(26px, 3.4vw, 36px);
+  }
+  section{ padding:96px 0; }
+  section + section{ border-top:1px solid var(--line); }
+
+  /* ---------- WORK GALLERY (依專案 精選) ---------- */
+  .work-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+  }
+  .work-card{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    cursor:default;
+  }
+  .work-card.wide{ grid-column: span 2; }
+  .work-card.wide .work-media{ aspect-ratio: 21/9; }
+  .work-media{
+    width:100%;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+    position:relative;
+  }
+  .work-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+  }
+  .work-card:hover .work-media img{
+    transform:scale(1.035);
+  }
+  .work-index{
+    position:absolute;
+    top:16px;
+    left:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--paper);
+    background:rgba(28,27,25,0.55);
+    padding:4px 10px;
+    border-radius:100px;
+    backdrop-filter:blur(4px);
+  }
+  .work-body{
+    padding:28px 30px 32px;
+  }
+  .work-body h3{
+    font-size:21px;
+    margin-bottom:10px;
+  }
+  .work-role{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    margin-bottom:16px;
+  }
+  .work-tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .work-tag{
+    font-size:11px;
+    padding:5px 10px;
+    background:var(--paper-dim);
+    border-radius:4px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+
+  @media (max-width:760px){
+    .work-gallery{ grid-template-columns:1fr; }
+    .work-card.wide{ grid-column:span 1; }
+    .work-card.wide .work-media{ aspect-ratio:4/5; }
+  }
+
+  /* ---------- TEXT PROPOSAL CARD (陳列企劃 — 無截圖時的呈現) ---------- */
+  .proposal-media{
+    width:100%;
+    aspect-ratio:21/9;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(139,58,47,0.14), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(74,93,83,0.14), transparent 55%),
+      var(--ink);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    padding:0 48px;
+  }
+  .proposal-media::before{
+    content:'';
+    position:absolute;
+    inset:20px;
+    border:1px solid rgba(247,243,237,0.18);
+  }
+  .proposal-content{
+    position:relative;
+    z-index:1;
+    color:var(--paper);
+    max-width:640px;
+  }
+  .proposal-eyebrow{
+    font-size:11px;
+    color:var(--brass);
+    margin-bottom:12px;
+  }
+  .proposal-title{
+    font-family:'Noto Serif TC', serif;
+    font-size:clamp(22px,3vw,30px);
+    font-weight:700;
+    margin-bottom:14px;
+    line-height:1.4;
+  }
+  .proposal-meta{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    font-size:12px;
+    color:rgba(247,243,237,0.68);
+  }
+  .proposal-meta span{ white-space:nowrap; }
+
+  @media (max-width:760px){
+    .proposal-media{ aspect-ratio:4/5; padding:0 28px; }
+  }
+
+  /* ---------- CASE WALL (Maccanti 完整案例牆) ---------- */
+  .case-wall-intro{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+    margin:64px 0 24px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .case-wall-intro h3{
+    font-size:20px;
+    margin-bottom:6px;
+  }
+  .case-wall-intro p{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    max-width:52ch;
+  }
+  .case-wall-count{
+    font-size:12px;
+    color:var(--sage);
+    white-space:nowrap;
+  }
+  .case-wall{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:2px;
+    background:var(--line);
+  }
+  .case-tile{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+  }
+  .case-tile-media{
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+  }
+  .case-tile-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .4s ease;
+  }
+  .case-tile:hover .case-tile-media img{
+    transform:scale(1.04);
+  }
+  .case-tile-label{
+    padding:10px 12px 14px;
+    font-size:12px;
+    color:rgba(28,27,25,0.68);
+    line-height:1.4;
+  }
+
+  /* ---------- STUDENT WORK (學生時期作品) ---------- */
+  .student-intro{
+    margin:64px 0 24px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .student-intro h3{
+    font-size:20px;
+    margin-bottom:8px;
+  }
+  .student-intro p{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    max-width:56ch;
+  }
+  .student-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+    margin-bottom:2px;
+  }
+  .student-card{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+  }
+  .student-media{
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+  }
+  .student-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .student-body{
+    padding:20px 22px 24px;
+  }
+  .student-body h4{
+    font-family:'Noto Serif TC', serif;
+    font-size:17px;
+    margin-bottom:6px;
+  }
+  .student-body p{
+    font-size:12.5px;
+    color:rgba(28,27,25,0.6);
+  }
+
+  @media (max-width:760px){
+    .student-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- ART STRIP (067淬 連結) ---------- */
+  .art-strip{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+  }
+  .art-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+  }
+  .art-gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    min-height:200px;
+  }
+  .art-strip img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    min-height:260px;
+  }
+  .art-copy{
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:16px;
+  }
+  .art-copy .k{
+    font-size:11px;
+    color:var(--clay);
+  }
+  .art-copy h3{
+    font-size:24px;
+  }
+  .art-copy p{
+    font-size:14px;
+    color:rgba(28,27,25,0.68);
+    max-width:44ch;
+  }
+  .art-link{
+    font-size:13px;
+    color:var(--clay);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    width:fit-content;
+  }
+  @media (max-width:760px){
+    .art-strip{ grid-template-columns:1fr; }
+    .art-strip img{ min-height:220px; }
+  }
+
+  /* ---------- SKILL FILTER (依技能 索引) ---------- */
+  .filter-bar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:48px;
+  }
+  .filter-pill{
+    font-size:13px;
+    padding:9px 18px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    background:transparent;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .filter-pill.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .filter-pill:hover:not(.active){
+    border-color:var(--clay);
+    color:var(--clay);
+  }
+
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:1px;
+    background:var(--line);
+  }
+  .skill-card{
+    background:var(--paper);
+    padding:36px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:200px;
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .skill-card:hover{
+    background:rgba(139,58,47,0.05);
+  }
+  .skill-card .k{
+    font-size:12px;
+    color:var(--sage);
+  }
+  .skill-card h4{
+    font-family:'Noto Serif TC', serif;
+    font-weight:600;
+    font-size:19px;
+  }
+  .skill-card p{
+    font-size:13.5px;
+    color:rgba(28,27,25,0.65);
+    flex:1;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about-grid p{
+    font-size:16px;
+    margin-bottom:20px;
+    color:rgba(28,27,25,0.78);
+  }
+  .timeline{
+    border-left:1px solid var(--line);
+    padding-left:28px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .timeline-item .t{
+    font-size:11px;
+    color:var(--clay);
+    margin-bottom:3px;
+  }
+  .timeline-item .d{
+    font-size:13.5px;
+    line-height:1.5;
+    color:rgba(28,27,25,0.7);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    text-align:center;
+  }
+  .contact h2{
+    font-size:clamp(32px, 5vw, 52px);
+    max-width:16ch;
+    margin:0 auto 24px;
+  }
+  .contact-sub{
+    color:rgba(28,27,25,0.65);
+    max-width:44ch;
+    margin:0 auto 40px;
+  }
+  .contact-links{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    padding:14px 32px;
+    border-radius:100px;
+    font-size:14px;
+    border:1px solid var(--ink);
+    transition:all .2s;
+  }
+  .btn.primary{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .btn.primary:hover{ background:var(--clay); border-color:var(--clay); }
+  .btn.ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  footer{
+    padding:40px 0;
+    text-align:center;
+    font-size:12px;
+    color:rgba(28,27,25,0.5);
+  }
+
+  @media (max-width:760px){
+    .navlinks{ display:none; }
+    .work-row{
+      grid-template-columns:40px 1fr;
+      gap:14px;
+    }
+    .work-tags{
+      grid-column:1 / -1;
+      justify-self:start;
+      justify-content:flex-start;
+      margin-top:6px;
+    }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+
+  /* ---------- CASE DETAIL PAGE ---------- */
+  .case-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(247,243,237,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:20px 0;
+  }
+  .case-nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .back-link{
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    opacity:0.75;
+    transition:opacity .2s;
+  }
+  .back-link:hover{ opacity:1; }
+  .case-hero{
+    padding:64px 0 48px;
+  }
+  .case-hero-eyebrow{
+    font-size:12px;
+    color:var(--clay);
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .case-hero-eyebrow::before{
+    content:'';
+    width:28px;
+    height:1px;
+    background:var(--clay);
+  }
+  .case-hero h1{
+    font-size:clamp(30px, 5vw, 48px);
+    line-height:1.3;
+    max-width:22ch;
+    margin-bottom:24px;
+  }
+  .case-meta-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:24px;
+    margin-top:40px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+  }
+  .case-meta-item .k{
+    font-size:11px;
+    color:var(--sage);
+    margin-bottom:6px;
+  }
+  .case-meta-item .v{
+    font-size:14px;
+    color:rgba(28,27,25,0.8);
+    line-height:1.5;
+  }
+  .case-main-image{
+    width:100%;
+    border-radius:2px;
+    overflow:hidden;
+    margin:48px 0;
+    background:var(--paper-dim);
+  }
+  .case-main-image img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+  .case-body{
+    max-width:72ch;
+    margin:0 auto;
+    padding:0 0 64px;
+  }
+  .case-body h2{
+    font-family:'Noto Serif TC', serif;
+    font-size:24px;
+    margin:48px 0 20px;
+  }
+  .case-body p{
+    font-size:16px;
+    line-height:1.9;
+    color:rgba(28,27,25,0.78);
+    margin-bottom:20px;
+  }
+  .case-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+    margin:48px 0;
+  }
+  .case-gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .case-gallery.single{
+    grid-template-columns:1fr;
+  }
+  .case-nav-footer{
+    border-top:1px solid var(--line);
+    padding:48px 0;
+  }
+  .case-nav-links{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .case-nav-link{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+  }
+  .case-nav-link a{
+    display:block;
+    margin-top:6px;
+    font-size:17px;
+    color:var(--ink);
+    font-family:'Noto Serif TC', serif;
+  }
+  .case-nav-link.next{ text-align:right; }
+  .btn-all-works{
+    padding:12px 28px;
+    border-radius:100px;
+    font-size:13px;
+    border:1px solid var(--ink);
+    transition:all .2s;
+    white-space:nowrap;
+  }
+  .btn-all-works:hover{ background:var(--ink); color:var(--paper); }
+
+  @media (max-width:760px){
+    .case-gallery{ grid-template-columns:1fr; }
+    .case-nav-links{ flex-direction:column; align-items:flex-start; }
+    .case-nav-link.next{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="case-nav">
+  <div class="wrap">
+    <a href="../index.html#works" class="back-link">&larr; 返回作品集</a>
+    <div class="logo" style="font-family:'Noto Serif TC',serif; font-weight:700; font-size:16px;">張穎華</div>
+  </div>
+</div>
+
+<section class="case-hero">
+  <div class="wrap">
+    <div class="case-hero-eyebrow mono">Price List Design — 價目表設計</div>
+    <h1>醫美產品手冊<br>整型項目分類頁設計</h1>
+
+    <div class="case-meta-grid">
+      <div class="case-meta-item">
+        <div class="k mono">負責角色</div>
+        <div class="v">手冊排版・分類頁視覺設計</div>
+      </div>
+      <div class="case-meta-item">
+        <div class="k mono">類型</div>
+        <div class="v">DM設計・價目表排版</div>
+      </div>
+      <div class="case-meta-item">
+        <div class="k mono">機構／品牌</div>
+        <div class="v">曙光國際醫美</div>
+      </div>
+    </div>
+
+    <div class="case-main-image">
+      <img src="../assets/works/medspa-menu2-eye-cover.jpg" alt="醫美產品手冊<br>整型項目分類頁設計">
+    </div>
+
+    <div class="case-body">
+      <h2>專案背景</h2>
+      <p>整型手術項目的手冊，需要清楚的分類頁面，讓顧客能快速找到自己感興趣的手術類別（眼部、鼻部等）。</p>
+      <h2>負責內容</h2>
+      <p>設計整型手術項目的分類頁，統一沙色調性搭配人像特寫照片，串連手冊各分類頁面，讓整份手冊在視覺上有一致的識別系統，同時保有每個分類的獨立質感。</p>
+      <h2>成果</h2>
+      <p>透過分類頁的視覺系統設計，讓原本容易顯得生硬的手術價目表，多了一層精品感的包裝。</p>
+      <div class="case-gallery single">
+        <img src="../assets/works/medspa-menu1-laser.jpg" alt="醫美產品手冊雷射微整項目">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="case-nav-footer">
+  <div class="wrap">
+    <div class="case-nav-links">
+      <div class="case-nav-link">
+        <span>上一件作品</span>
+        <a href="aurora-medspa-menu1.html">雷射微整項目</a>
+      </div>
+      <a href="../index.html#works" class="btn-all-works">所有作品</a>
+      <div class="case-nav-link next">
+        <span>下一件作品</span>
+        <a href="hakka-tea.html">投標企劃書</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
