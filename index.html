@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>張穎華 — 作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F3ED;
+    --ink:#1C1B19;
+    --clay:#8B3A2F;
+    --sage:#4A5D53;
+    --brass:#C9A876;
+    --paper-dim:#EFE9DF;
+    --line: rgba(28,27,25,0.12);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans TC', sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+
+  h1,h2,h3{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- 溫紋分隔線（淬火意象：黏土紅 → 山苔綠）---------- */
+  .temper-rule{
+    height:2px;
+    width:100%;
+    background:linear-gradient(90deg, var(--clay) 0%, var(--brass) 45%, var(--sage) 100%);
+    opacity:0.85;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(247,243,237,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  .logo{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:20px;
+  }
+  .logo span{ color:var(--clay); }
+  .navlinks{
+    display:flex;
+    gap:36px;
+    font-size:14px;
+  }
+  .navlinks a{
+    position:relative;
+    padding-bottom:4px;
+    opacity:0.75;
+    transition:opacity .2s;
+  }
+  .navlinks a:hover{ opacity:1; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:120px 0 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    font-size:12px;
+    color:var(--clay);
+    margin-bottom:28px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .hero-eyebrow::before{
+    content:'';
+    width:28px;
+    height:1px;
+    background:var(--clay);
+  }
+  .hero h1{
+    font-size:clamp(38px, 6vw, 68px);
+    line-height:1.25;
+    max-width:16ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--clay);
+  }
+  .hero-sub{
+    margin-top:28px;
+    max-width:52ch;
+    font-size:17px;
+    color:rgba(28,27,25,0.72);
+  }
+  .hero-tags{
+    margin-top:40px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .tag{
+    font-size:12px;
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:100px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.4);
+  }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:44px;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .section-num{
+    font-size:12px;
+    color:var(--sage);
+  }
+  .section-head h2{
+    font-size:clamp(26px, 3.4vw, 36px);
+  }
+  section{ padding:96px 0; }
+  section + section{ border-top:1px solid var(--line); }
+
+  /* ---------- WORK GALLERY (依專案 精選) ---------- */
+  .work-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+  }
+  .work-card{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    cursor:default;
+  }
+  .work-card.wide{ grid-column: span 2; }
+  .work-card.wide .work-media{ aspect-ratio: 21/9; }
+  .work-media{
+    width:100%;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+    position:relative;
+  }
+  .work-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+  }
+  .work-card:hover .work-media img{
+    transform:scale(1.035);
+  }
+  .work-index{
+    position:absolute;
+    top:16px;
+    left:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--paper);
+    background:rgba(28,27,25,0.55);
+    padding:4px 10px;
+    border-radius:100px;
+    backdrop-filter:blur(4px);
+  }
+  .work-body{
+    padding:28px 30px 32px;
+  }
+  .work-body h3{
+    font-size:21px;
+    margin-bottom:10px;
+  }
+  .work-role{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    margin-bottom:16px;
+  }
+  .work-tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .work-tag{
+    font-size:11px;
+    padding:5px 10px;
+    background:var(--paper-dim);
+    border-radius:4px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+
+  @media (max-width:760px){
+    .work-gallery{ grid-template-columns:1fr; }
+    .work-card.wide{ grid-column:span 1; }
+    .work-card.wide .work-media{ aspect-ratio:4/5; }
+  }
+
+  /* ---------- TEXT PROPOSAL CARD (陳列企劃 — 無截圖時的呈現) ---------- */
+  .proposal-media{
+    width:100%;
+    aspect-ratio:21/9;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(139,58,47,0.14), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(74,93,83,0.14), transparent 55%),
+      var(--ink);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    padding:0 48px;
+  }
+  .proposal-media::before{
+    content:'';
+    position:absolute;
+    inset:20px;
+    border:1px solid rgba(247,243,237,0.18);
+  }
+  .proposal-content{
+    position:relative;
+    z-index:1;
+    color:var(--paper);
+    max-width:640px;
+  }
+  .proposal-eyebrow{
+    font-size:11px;
+    color:var(--brass);
+    margin-bottom:12px;
+  }
+  .proposal-title{
+    font-family:'Noto Serif TC', serif;
+    font-size:clamp(22px,3vw,30px);
+    font-weight:700;
+    margin-bottom:14px;
+    line-height:1.4;
+  }
+  .proposal-meta{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    font-size:12px;
+    color:rgba(247,243,237,0.68);
+  }
+  .proposal-meta span{ white-space:nowrap; }
+
+  @media (max-width:760px){
+    .proposal-media{ aspect-ratio:4/5; padding:0 28px; }
+  }
+
+  /* ---------- CASE WALL (Maccanti 完整案例牆) ---------- */
+  .case-wall-intro{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+    margin:64px 0 24px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .case-wall-intro h3{
+    font-size:20px;
+    margin-bottom:6px;
+  }
+  .case-wall-intro p{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    max-width:52ch;
+  }
+  .case-wall-count{
+    font-size:12px;
+    color:var(--sage);
+    white-space:nowrap;
+  }
+  .case-wall{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:2px;
+    background:var(--line);
+  }
+  .case-tile{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+  }
+  .case-tile-media{
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+  }
+  .case-tile-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .4s ease;
+  }
+  .case-tile:hover .case-tile-media img{
+    transform:scale(1.04);
+  }
+  .case-tile-label{
+    padding:10px 12px 14px;
+    font-size:12px;
+    color:rgba(28,27,25,0.68);
+    line-height:1.4;
+  }
+
+  /* ---------- STUDENT WORK (學生時期作品) ---------- */
+  .student-intro{
+    margin:64px 0 24px;
+    padding-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .student-intro h3{
+    font-size:20px;
+    margin-bottom:8px;
+  }
+  .student-intro p{
+    font-size:13px;
+    color:rgba(28,27,25,0.6);
+    max-width:56ch;
+  }
+  .student-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+    margin-bottom:2px;
+  }
+  .student-card{
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+  }
+  .student-media{
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:var(--paper-dim);
+  }
+  .student-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .student-body{
+    padding:20px 22px 24px;
+  }
+  .student-body h4{
+    font-family:'Noto Serif TC', serif;
+    font-size:17px;
+    margin-bottom:6px;
+  }
+  .student-body p{
+    font-size:12.5px;
+    color:rgba(28,27,25,0.6);
+  }
+
+  @media (max-width:760px){
+    .student-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- ART STRIP (067淬 連結) ---------- */
+  .art-strip{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+  }
+  .art-gallery{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:2px;
+    background:var(--line);
+  }
+  .art-gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    min-height:200px;
+  }
+  .art-strip img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    min-height:260px;
+  }
+  .art-copy{
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:16px;
+  }
+  .art-copy .k{
+    font-size:11px;
+    color:var(--clay);
+  }
+  .art-copy h3{
+    font-size:24px;
+  }
+  .art-copy p{
+    font-size:14px;
+    color:rgba(28,27,25,0.68);
+    max-width:44ch;
+  }
+  .art-link{
+    font-size:13px;
+    color:var(--clay);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    width:fit-content;
+  }
+  @media (max-width:760px){
+    .art-strip{ grid-template-columns:1fr; }
+    .art-strip img{ min-height:220px; }
+  }
+
+  /* ---------- SKILL FILTER (依技能 索引) ---------- */
+  .filter-bar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:48px;
+  }
+  .filter-pill{
+    font-size:13px;
+    padding:9px 18px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    background:transparent;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .filter-pill.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .filter-pill:hover:not(.active){
+    border-color:var(--clay);
+    color:var(--clay);
+  }
+
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:1px;
+    background:var(--line);
+  }
+  .skill-card{
+    background:var(--paper);
+    padding:36px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:200px;
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .skill-card:hover{
+    background:rgba(139,58,47,0.05);
+  }
+  .skill-card .k{
+    font-size:12px;
+    color:var(--sage);
+  }
+  .skill-card h4{
+    font-family:'Noto Serif TC', serif;
+    font-weight:600;
+    font-size:19px;
+  }
+  .skill-card p{
+    font-size:13.5px;
+    color:rgba(28,27,25,0.65);
+    flex:1;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about-grid p{
+    font-size:16px;
+    margin-bottom:20px;
+    color:rgba(28,27,25,0.78);
+  }
+  .timeline{
+    border-left:1px solid var(--line);
+    padding-left:28px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .timeline-item .t{
+    font-size:11px;
+    color:var(--clay);
+    margin-bottom:3px;
+  }
+  .timeline-item .d{
+    font-size:13.5px;
+    line-height:1.5;
+    color:rgba(28,27,25,0.7);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    text-align:center;
+  }
+  .contact h2{
+    font-size:clamp(32px, 5vw, 52px);
+    max-width:16ch;
+    margin:0 auto 24px;
+  }
+  .contact-sub{
+    color:rgba(28,27,25,0.65);
+    max-width:44ch;
+    margin:0 auto 40px;
+  }
+  .contact-links{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    padding:14px 32px;
+    border-radius:100px;
+    font-size:14px;
+    border:1px solid var(--ink);
+    transition:all .2s;
+  }
+  .btn.primary{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .btn.primary:hover{ background:var(--clay); border-color:var(--clay); }
+  .btn.ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  footer{
+    padding:40px 0;
+    text-align:center;
+    font-size:12px;
+    color:rgba(28,27,25,0.5);
+  }
+
+  @media (max-width:760px){
+    .navlinks{ display:none; }
+    .work-row{
+      grid-template-columns:40px 1fr;
+      gap:14px;
+    }
+    .work-tags{
+      grid-column:1 / -1;
+      justify-self:start;
+      justify-content:flex-start;
+      margin-top:6px;
+    }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">張穎華 <span>·</span> Portfolio</div>
+    <div class="navlinks">
+      <a href="#works">精選作品</a>
+      <a href="#skills">工作方式</a>
+      <a href="#about">關於我</a>
+      <a href="#contact">聯絡</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow mono">Concept to execution</div>
+    <h1>從<em>模糊的需求</em>，<br>到可以落地的方案。</h1>
+    <p class="hero-sub">
+擅長將需求整理為清楚的企劃方向，整合概念發想、提案簡報、品牌溝通與視覺設計，推動一個構想從討論走向實際執行。
+</p>
+    <div class="hero-tags">
+<span class="tag">企劃策略</span><span class="tag">概念發想</span><span class="tag">提案簡報</span><span class="tag">品牌溝通</span><span class="tag">專案執行</span>
+</div>
+  </div>
+</section>
+
+<div class="temper-rule"></div>
+
+<section id="works">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-num mono">Selected — 精選</div>
+        <h2>代表案例</h2>
+      </div>
+      <div style="font-size:13px; color:rgba(28,27,25,0.55); max-width:34ch;">
+        精選能呈現我如何整理需求、建立方向並推進執行的案例。
+      </div>
+    </div>
+
+    <div class="filter-bar" id="workFilterBar">
+      <button class="filter-pill active" data-filter="全部">全部</button>
+      <button class="filter-pill" data-filter="企劃">企劃</button>
+      <button class="filter-pill" data-filter="視覺設計">視覺設計</button>
+      <button class="filter-pill" data-filter="文案">文案</button>
+      <button class="filter-pill" data-filter="簡報">簡報</button>
+      <button class="filter-pill" data-filter="影片">影片</button>
+    </div>
+
+    <p id="filterEmptyState" style="display:none; font-size:14px; color:rgba(28,27,25,0.5); padding:40px 0; text-align:center;">
+      這個分類目前還沒有上架的案例，歡迎瀏覽其他分類。
+    </p>
+
+    <div class="work-gallery" id="workGallery">
+      <a href="works/hakka-tea.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="企劃,文案">
+        <div class="work-media">
+          <span class="work-index">01</span>
+          <img src="assets/works/hakka-proposal.jpg" alt="客家擂茶禮盒標案企劃書">
+        </div>
+        <div class="work-body">
+          <h3>客家擂茶禮盒設計開發案・投標企劃書</h3>
+          <div class="work-role">負責：企劃架構・目標客群分析・文案撰寫</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">現職於融意設計擔任企劃執行，負責機關標案的社群文案與提案撰寫。此案為客家委員會客家文化發展中心標案，從產品定位、目標客群分析到執行團隊優勢整理，完整規劃投標企劃書架構。</p>
+          <div class="work-tags">
+            <span class="work-tag">標案企劃</span>
+            <span class="work-tag">文創提案</span>
+            <span class="work-tag">文案</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/maccanti-campaign.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="企劃,視覺設計,文案">
+        <div class="work-media"><span class="work-index">02</span><img src="assets/works/maccanti-brandvisual.jpg" alt="Maccanti 品牌行銷與門市活動整合"></div>
+        <div class="work-body"><h3>Maccanti 義大利冰淇淋・品牌行銷與門市活動整合</h3>
+        <div class="work-role">負責：行銷主題發想・活動企劃・社群與門市文宣・KOC拍攝規劃</div>
+        <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">從節慶檔期、新品推廣到門市活動，整合行銷主題、活動內容與視覺延伸，協助品牌建立一致的溝通方式。</p>
+        <div class="work-tags"><span class="work-tag">整合行銷</span><span class="work-tag">活動企劃</span><span class="work-tag">品牌溝通</span></div></div></div></a>
+
+      <a href="works/teacher-summit.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="企劃,文案">
+        <div class="work-media">
+          <span class="work-index">03</span>
+          <img src="assets/works/teacher-summit.jpg" alt="雙語教師共識營文案企劃">
+        </div>
+        <div class="work-body">
+          <h3>雙語教師共識營・「飛鳥意象」文案企劃</h3>
+          <div class="work-role">負責：概念發想・文案撰寫・視覺方向規劃</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">以「飛鳥」意象貫穿活動論述，將雙語教育詮釋為跨越文化邊界的能力，從中英雙語標語到內文皆親自撰寫。</p>
+          <div class="work-tags">
+            <span class="work-tag">文案</span>
+            <span class="work-tag">活動企劃</span>
+            <span class="work-tag">概念發想</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/liangho-jewelry.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="企劃">
+        <div class="proposal-media">
+          <div class="proposal-content">
+            <div class="proposal-eyebrow mono">Window Display Proposal — 陳列企劃</div>
+            <div class="proposal-title">良和珠寶門市櫥窗提案・「消失的女王」秋季陳列</div>
+            <div class="proposal-meta">
+              <span>主題發想・色彩計畫・預算表・時程規劃</span>
+              <span>目標客群：25–35歲輕熟女</span>
+              <span>執行週期：12週</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3>良和珠寶門市櫥窗提案・秋季陳列企劃</h3>
+          <div class="work-role">負責：櫥窗企劃實習生（2016/10–12）・主題發想・陳列企劃・預算與時程規劃</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">職涯初期於良和珠寶行銷企劃處擔任約聘實習生，負責門市櫥窗的整體陳列企劃，從主題發想到執行預算都獨立規劃。</p>
+          <div class="work-tags">
+            <span class="work-tag">空間陳列企劃</span>
+            <span class="work-tag">主題發想</span>
+            <span class="work-tag">預算規劃</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/aurora-medspa-brand.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">04</span>
+          <img src="assets/works/medspa-fbcover.jpg" alt="醫美診所臉書封面與品牌識別設計">
+        </div>
+        <div class="work-body">
+          <h3>曙光國際醫美・品牌識別與社群封面設計</h3>
+          <div class="work-role">負責：Logo設計・品牌識別・社群視覺</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">2023年於台灣雅典娜智慧科技擔任美編行銷企劃，負責診所全案的視覺識別，包含花草線條與人像側臉結合的Logo設計。</p>
+          <div class="work-tags">
+            <span class="work-tag">Logo</span>
+            <span class="work-tag">品牌識別</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/liteputer-catalog.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">05</span>
+          <img src="assets/works/liteputer-catalog.jpg" alt="Liteputer 燈控產品型錄提案">
+        </div>
+        <div class="work-body">
+          <h3>Liteputer 燈控系統・產品型錄封面提案</h3>
+          <div class="work-role">負責：品牌視覺・多版本提案設計</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">於詠真實業擔任燈光設計助理期間，負責產品手冊設計，一次提出6款不同調性的型錄封面供客戶選擇。</p>
+          <div class="work-tags">
+            <span class="work-tag">型錄設計</span>
+            <span class="work-tag">B2B品牌視覺</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/aurora-medspa-flyer.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">12</span>
+          <img src="assets/works/medspa-flyer.jpg" alt="醫美中心服務項目傳單">
+        </div>
+        <div class="work-body">
+          <h3>曙光國際抗老再生醫學中心・服務傳單</h3>
+          <div class="work-role">負責：資訊架構・視覺設計</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">將複雜的療程分級與價格資訊，整理成清楚易讀的兩欄式方案對照表。</p>
+          <div class="work-tags">
+            <span class="work-tag">DM設計</span>
+            <span class="work-tag">資訊整理</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/sakura-kitchen-main.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">13</span>
+          <img src="assets/works/kitchen-design-main.jpg" alt="台灣櫻花廚具設計3D渲染圖">
+        </div>
+        <div class="work-body">
+          <h3>台灣櫻花・訂製廚具空間設計</h3>
+          <div class="work-role">負責：廚房設計・3D渲染・材質與五金配色</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">2024–2025年於台灣櫻花擔任廚具設計師，職務橫跨廚房空間設計、客戶產品介紹、業務執行到現場監工。</p>
+          <div class="work-tags">
+            <span class="work-tag">空間設計</span>
+            <span class="work-tag">3D渲染</span>
+            <span class="work-tag">產品設計</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/sakura-kitchen-bar.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card wide" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">14</span>
+          <img src="assets/works/kitchen-design-bar.jpg" alt="台灣櫻花廚具設計吧檯款3D渲染圖">
+        </div>
+        <div class="work-body">
+          <h3>台灣櫻花・開放式中島吧檯設計</h3>
+          <div class="work-role">負責：廚房設計・3D渲染・空間動線規劃</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">水泥灰搭配木紋收邊的吧檯設計，依客戶居家空間規劃開放式中島動線。</p>
+          <div class="work-tags">
+            <span class="work-tag">空間設計</span>
+            <span class="work-tag">3D渲染</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/aurora-medspa-lfile.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">15</span>
+          <img src="assets/works/medspa-lfile.jpg" alt="曙光國際醫美L夾線稿插畫">
+        </div>
+        <div class="work-body">
+          <h3>曙光國際醫美・L夾線稿插畫</h3>
+          <div class="work-role">負責：插畫繪製・視覺設計</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">以簡約人體線稿詮釋「醫學美容」主題，作為診所周邊文件夾的封面設計。</p>
+          <div class="work-tags">
+            <span class="work-tag">插畫</span>
+            <span class="work-tag">周邊設計</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/aurora-medspa-menu1.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">16</span>
+          <img src="assets/works/medspa-menu1-laser.jpg" alt="醫美產品手冊雷射微整項目排版">
+        </div>
+        <div class="work-body">
+          <h3>醫美產品手冊・雷射微整項目</h3>
+          <div class="work-role">負責：手冊排版・資訊視覺化</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">將除毛雷射的部位與價格，以人像圖搭配標註線的方式清楚呈現，降低顧客閱讀價目表的門檻。</p>
+          <div class="work-tags">
+            <span class="work-tag">DM設計</span>
+            <span class="work-tag">價目表排版</span>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="works/aurora-medspa-menu2.html" style="text-decoration:none; color:inherit; display:block;"><div class="work-card" data-tags="視覺設計">
+        <div class="work-media">
+          <span class="work-index">17</span>
+          <img src="assets/works/medspa-menu2-eye-cover.jpg" alt="醫美產品手冊整型項目分類頁">
+        </div>
+        <div class="work-body">
+          <h3>醫美產品手冊・整型項目分類頁</h3>
+          <div class="work-role">負責：手冊排版・分類頁視覺設計</div>
+          <p style="font-size:12.5px; color:rgba(28,27,25,0.55); margin-top:10px; line-height:1.6;">整型手術項目的分類頁設計，統一沙色調性搭配人像特寫，串連手冊各分類。</p>
+          <div class="work-tags">
+            <span class="work-tag">DM設計</span>
+            <span class="work-tag">價目表排版</span>
+          </div>
+        </div>
+      </div></a>
+    </div>
+
+    <div class="case-wall-intro">
+      <div>
+        <h3>Maccanti 義大利冰淇淋・品牌行銷與門市活動整合</h3>
+        <p>2025/7–12 於鼎霖全球商貿擔任行銷企劃設計，負責年度節慶活動企劃、行銷主題發想、社群與門市文宣，以及 KOC 拍攝規劃。以下作品呈現從主題、活動到視覺延伸的整合成果。</p>
+      </div>
+      <div class="case-wall-count mono">18 pieces</div>
+    </div>
+
+    <div class="case-wall">
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-christmas.jpg" alt="Maccanti 聖誕節慶海報"></div>
+        <div class="case-tile-label">聖誕限定活動</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-halloween.jpg" alt="Maccanti 萬聖節海報"></div>
+        <div class="case-tile-label">萬聖節限定</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-qixi.jpg" alt="Maccanti 七夕情人節海報"></div>
+        <div class="case-tile-label">七夕・浪漫維納斯</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-newyear.jpg" alt="Maccanti 跨年主視覺"></div>
+        <div class="case-tile-label">跨年・招財主視覺</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-giftbox.jpg" alt="Maccanti 聖誕冰淇淋禮盒預購海報"></div>
+        <div class="case-tile-label">聖誕禮盒預購</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-redbean.jpg" alt="Maccanti 紅豆湯圓海報"></div>
+        <div class="case-tile-label">紅豆湯圓新品</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-strawberry.jpg" alt="Maccanti 草莓雪酪海報"></div>
+        <div class="case-tile-label">草莓雪酪限定</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-yuzuyogurt.jpg" alt="Maccanti 柚香優格海報"></div>
+        <div class="case-tile-label">柚香優格新品</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-xmascard.jpg" alt="Maccanti 聖誕節賀卡"></div>
+        <div class="case-tile-label">聖誕節賀卡</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-pomelo.jpg" alt="Maccanti 柚子中秋海報"></div>
+        <div class="case-tile-label">中秋・柚子雪酪</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-preorder0909.jpg" alt="Maccanti 特選禮盒預購海報"></div>
+        <div class="case-tile-label">特選禮盒預購</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-giftbox0829.jpg" alt="Maccanti 特選禮盒9/14海報"></div>
+        <div class="case-tile-label">特選禮盒活動</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-giftbox0828.jpg" alt="Maccanti Quadruple Joy禮盒海報"></div>
+        <div class="case-tile-label">Quadruple Joy 禮盒</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-fathersday.jpg" alt="Maccanti 父親節海報"></div>
+        <div class="case-tile-label">父親節特選</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-4scoop.jpg" alt="Maccanti 4球折扣海報"></div>
+        <div class="case-tile-label">4 Scoop 折扣活動</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-brandvisual.jpg" alt="Maccanti 品牌主視覺開發稿"></div>
+        <div class="case-tile-label">品牌主視覺開發</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-nationalday.jpg" alt="Maccanti 雙十節祝賀圖"></div>
+        <div class="case-tile-label">雙十節祝賀圖</div>
+      </div>
+      <div class="case-tile">
+        <div class="case-tile-media"><img src="assets/works/maccanti-teachersday.jpg" alt="Maccanti 教師節祝賀圖"></div>
+        <div class="case-tile-label">教師節祝賀圖</div>
+      </div>
+    </div>
+
+    <div class="student-intro">
+      <h3>學生時期作品</h3>
+      <p>東海大學工業設計系期間（2011–2015）的訓練作品，展現產品設計思考與平面創意的基礎。</p>
+    </div>
+
+    <div class="student-grid">
+      <div class="student-card">
+        <div class="student-media">
+          <img src="assets/works/uni-lamp-design.jpg" alt="深海怪燈 Deep Monster 燈具設計">
+        </div>
+        <div class="student-body">
+          <h4>Deep Monster｜深海怪燈</h4>
+          <p>取自深海生物之雙透明層結構，使人在深夜感到寧靜的小夜燈。</p>
+        </div>
+      </div>
+
+      <div class="student-card">
+        <div class="student-media">
+          <img src="assets/works/uni-street-furniture.jpg" alt="Circle Sun 街具設計">
+        </div>
+        <div class="student-body">
+          <h4>Circle Sun｜街具設計</h4>
+          <p>有機藤蔓造型公共街具，探索自然結構與休憩空間的關係。</p>
+        </div>
+      </div>
+
+      <div class="student-card">
+        <div class="student-media">
+          <img src="assets/works/uni-poster-cram-school.jpg" alt="東信補習班招生海報">
+        </div>
+        <div class="student-body">
+          <h4>東信補習班・招生海報</h4>
+          <p>像素插畫風格，平面設計與排版練習，招生資訊分層清楚。</p>
+        </div>
+      </div>
+
+      <div class="student-card">
+        <div class="student-media">
+          <img src="assets/works/uni-poster-singing.jpg" alt="Voice of Cape 歌唱比賽海報">
+        </div>
+        <div class="student-body">
+          <h4>Voice of Cape｜歌唱比賽主視覺</h4>
+          <p>大學社團「創意活動企劃社」推廣期間的活動主視覺，拼貼字體與手繪插畫呈現音樂能量感。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="proposal-media" style="aspect-ratio:auto; padding:40px 48px;">
+      <div class="proposal-content" style="max-width:none;">
+        <div class="proposal-eyebrow mono">Product Design Portfolio — 大學作品集 2012–2014</div>
+        <div class="proposal-title" style="margin-bottom:20px;">工業設計系・產品概念設計精選</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; font-size:13px; color:rgba(247,243,237,0.82); line-height:1.6;">
+          <div>
+            <strong style="color:var(--brass);">UniBuggy｜客製化嬰兒車</strong><br>
+            模組化零件選購服務，讓消費者依嬰兒發育與家庭需求打造專屬嬰兒車，並串連二手交易平台減少資源浪費。
+          </div>
+          <div>
+            <strong style="color:var(--brass);">GreenwayApp｜草悟道尋路系統</strong><br>
+            以「行草悟道」為概念的尋路App，透過聲音與震動提示，打造尋寶式的都會探索體驗。
+          </div>
+          <div>
+            <strong style="color:var(--brass);">LazilyHola｜樂齡友善街具設計</strong><br>
+            改善高齡者聚會空間的座位規劃，以振幅造型路擋兼顧倚靠與通行需求。
+          </div>
+          <div>
+            <strong style="color:var(--brass);">Pangcah｜族人們的照拂</strong><br>
+            原住民族群關懷相關產品設計提案。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-strip" style="margin-top:64px;">
+      <div class="art-gallery">
+        <img src="assets/works/067cui-painting.jpg" alt="067淬 抽象壓克力畫作 - 圓形構圖">
+        <img src="assets/works/067cui-painting2.jpg" alt="067淬 抽象壓克力畫作 - 長幅構圖">
+        <img src="assets/works/067cui-lineart1.jpg" alt="067淬 色鉛筆線稿 - 漩渦構圖">
+        <img src="assets/works/067cui-detail.jpg" alt="067淬 厚塗技法細節特寫">
+      </div>
+      <div class="art-copy">
+        <div class="k mono">Beyond commercial work — 個人創作</div>
+        <h3>067淬｜抽象壓克力繪畫</h3>
+        <p>
+          2020–2022年以SOHO文創繪畫師身分於桃園、台北市集駐點，從事占卜、繪畫、速寫。
+          現同步經營個人創作品牌「067淬」，以厚塗、滴流、直覺色彩進行抽象繪畫創作，
+          並延伸至色鉛筆線稿的律動線條探索。對色彩與構圖的敏感度，也回饋到日常的商業設計工作中。
+        </p>
+        <span class="art-link">@067ycjia →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-num mono">Capabilities — 工作方式</div>
+        <h2>我能解決什麼問題</h2>
+      </div>
+      <div style="font-size:13px; color:rgba(28,27,25,0.55); max-width:34ch;">
+        從整理問題、建立方向，到完成溝通與推進執行。
+      </div>
+    </div>
+
+    <div class="skill-grid">
+      <div class="skill-card" data-jump-filter="企劃" role="button" tabindex="0">
+        <div class="k mono">01 — Define</div>
+        <h4>把模糊需求整理成方向</h4>
+        <p>企劃架構、需求分析、概念定位與提案策略。</p>
+      </div>
+      <div class="skill-card" data-jump-filter="視覺設計" role="button" tabindex="0">
+        <div class="k mono">02 — Communicate</div>
+        <h4>把概念說清楚</h4>
+        <p>品牌論述、活動文案、提案簡報與資訊整理。</p>
+      </div>
+      <div class="skill-card" data-jump-filter="文案" role="button" tabindex="0">
+        <div class="k mono">03 — Visualize</div>
+        <h4>把方向做成看得見的東西</h4>
+        <p>主視覺、品牌延伸、行銷素材與空間陳列。</p>
+      </div>
+      <div class="skill-card" data-jump-filter="簡報" role="button" tabindex="0">
+        <div class="k mono">04 — Execute</div>
+        <h4>把事情推到落地</h4>
+        <p>時程規劃、跨部門溝通、執行協調與現場支援。</p>
+      </div>
+      <div class="skill-card" data-jump-filter="影片" role="button" tabindex="0">
+        <div class="k mono">Motion</div>
+        <h4>短片剪輯</h4>
+        <p>活動記錄、短版宣傳影片剪輯。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-num mono">About — 關於</div>
+      <h2 style="margin:14px 0 28px; font-size:clamp(26px,3.4vw,36px);">我不是只負責其中一個環節</h2>
+      <p>我擅長處理一開始還沒有明確答案的事情。從理解需求、整理資訊、發想方向，到製作提案、溝通調整與執行落地，我習慣站在整體角度思考，而不只完成被交付的一小部分。</p>
+      <p>工業設計背景讓我習慣從使用者、需求與實際限制思考；後續跨足文化專案、品牌行銷、空間設計與產品設計，累積了不同產業的溝通與整合經驗。我目前希望持續投入企劃、品牌整合與專案推動相關工作，往能整合資源、建立方向與推進執行的角色發展。</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t mono">2026 – 現在</div>
+        <div class="d">融意設計有限公司・企劃執行（社群文案、機關窗口）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2025</div>
+        <div class="d">馬卡諦義大利冰淇淋・行銷企劃設計（門市活動、KOC拍攝、文宣、社群）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2024 – 2025</div>
+        <div class="d">台灣櫻花・廚具設計師（廚房設計、業務執行、監工）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2024</div>
+        <div class="d">百適達數位科技・產品設計師（植牙導引板設計、文宣、學會活動）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2023</div>
+        <div class="d">台灣雅典娜智慧科技・美編行銷企劃（醫美DM、文宣設計）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2020 – 2022</div>
+        <div class="d">SOHO 個人藝術工作室・文創繪畫師（占卜、繪畫、市集擺攤）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2018 – 2019</div>
+        <div class="d">邱德光室內設計・軟裝設計助理（陳設規劃、簡報製作）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2015 – 2016</div>
+        <div class="d">詠真實業（燈控系統）・燈光設計助理（產品手冊、社群文宣）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">2016</div>
+        <div class="d">良和珠寶・櫥窗企劃實習生｜普拉嘉國際意象・電影劇組美術組</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">學歷</div>
+        <div class="d">東海大學 工業設計系（2011–2015）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t mono">軟體能力</div>
+        <div class="d">Photoshop・Illustrator・InDesign・AutoCAD・SolidWorks・Canva・剪映</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="temper-rule"></div>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="section-num mono" style="margin-bottom:16px;">Contact — 聯絡</div>
+    <h2>有案子想聊聊，<br>或想找人一起完成？</h2>
+    <p class="contact-sub">求職邀約、專案合作，歡迎透過以下方式聯繫。</p>
+    <div class="contact-links">
+      <a href="mailto:Oki221ooo@gmail.com" class="btn primary">Oki221ooo@gmail.com</a>
+      <a href="#" class="btn ghost">Instagram @067ycjia</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 張穎華 · Built with care
+</footer>
+
+<script>
+(function(){
+  var filterBar = document.getElementById('workFilterBar');
+  var gallery = document.getElementById('workGallery');
+  var emptyState = document.getElementById('filterEmptyState');
+  if(!filterBar || !gallery) return;
+
+  var cards = Array.prototype.slice.call(gallery.querySelectorAll('.work-card'));
+  var pills = Array.prototype.slice.call(filterBar.querySelectorAll('.filter-pill'));
+
+  function applyFilter(tag){
+    var visibleCount = 0;
+    cards.forEach(function(card){
+      var tags = (card.getAttribute('data-tags') || '').split(',');
+      var show = (tag === '全部') || tags.indexOf(tag) !== -1;
+      card.style.display = show ? '' : 'none';
+      if(show) visibleCount++;
+    });
+    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    gallery.style.display = visibleCount === 0 ? 'none' : '';
+
+    pills.forEach(function(p){
+      p.classList.toggle('active', p.getAttribute('data-filter') === tag);
+    });
+  }
+
+  filterBar.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter-pill');
+    if(!btn) return;
+    applyFilter(btn.getAttribute('data-filter'));
+  });
+
+  // Skill cards below jump up to #works and apply the matching filter
+  var skillCards = document.querySelectorAll('[data-jump-filter]');
+  skillCards.forEach(function(card){
+    function jump(){
+      var tag = card.getAttribute('data-jump-filter');
+      applyFilter(tag);
+      document.getElementById('works').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    card.addEventListener('click', jump);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); jump(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
