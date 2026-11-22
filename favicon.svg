@@ -1,0 +1,1 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="c"><path d="M32 8C27 18 18 27 18 39a14 14 0 0 0 28 0C46 27 37 18 32 8z"/></clipPath></defs><rect width="64" height="64" rx="14" fill="#F4F8FB"/><path d="M32 8C27 18 18 27 18 39a14 14 0 0 0 28 0C46 27 37 18 32 8z" fill="#8FD3E8"/><path d="M0 0L64 64H0z" fill="#2F6FB0" clip-path="url(#c)"/></svg>
