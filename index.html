@@ -1191,42 +1191,32 @@ function cap(b){return b.dataset.cap||($('img',b)||{}).alt||''}
 function showL(n){
   if(!set.length)return;
   at=(n+set.length)%set.length;
-  var b=set[at],i=$('img',b),rawSrc=i&&(i.getAttribute('src')||i.currentSrc||i.src);
+  var b=set[at],thumb=$('img',b),source=thumb&&(thumb.currentSrc||thumb.getAttribute('src')||thumb.src);
+  var caption=cap(b),counter=set.length>1?'（'+(at+1)+' / '+set.length+'）':'';
+  // Reset all state before changing source, so a previous image cannot flash or remain visible.
   sc.classList.remove('big');$('#lbz').textContent='放大看字';
-  sc.scrollTop=sc.scrollLeft=0;
-  img.onload=null;
-  img.onerror=null;
-  img.classList.remove('ld');
-  img.style.visibility='visible';
-  img.alt=cap(b);
-  $('#lbcap').textContent=cap(b)+(set.length>1?'（'+(at+1)+' / '+set.length+'）':'');
+  img.onload=null;img.onerror=null;img.classList.remove('ld');img.style.opacity='0';img.style.visibility='hidden';
+  img.removeAttribute('src');img.alt=caption;
+  $('#lbcap').textContent=caption+counter;
   $('#lbp').hidden=$('#lbn').hidden=set.length<2;
-  if(!rawSrc){
-    img.removeAttribute('src');
-    img.style.visibility='hidden';
-    return;
-  }
-  var resolvedSrc=rawSrc;
-  try{resolvedSrc=new URL(rawSrc,document.baseURI).href}catch(err){}
-  var reqId=(showL._req=(showL._req||0)+1);
+  if(!source){$('#lbcap').textContent=caption+'（找不到圖片來源）';return}
+  var resolved;
+  try{resolved=new URL(source,document.baseURI).href}catch(err){resolved=source}
+  // Guard against callbacks from a previous navigation in the lightbox.
+  var target=resolved;
   img.onload=function(){
-    if(showL._req!==reqId)return;
-    img.classList.add('ld');
+    if(img.src!==target)return;
+    if(img.naturalWidth>0){img.classList.add('ld');img.style.opacity='1';img.style.visibility='visible';$('#lbcap').textContent=caption+counter}
+    else{img.onerror()}
   };
   img.onerror=function(){
-    if(showL._req!==reqId)return;
-    img.classList.remove('ld');
-    img.style.visibility='hidden';
-    $('#lbcap').textContent=cap(b)+'（圖片載入失敗，請重新整理頁面）';
+    if(img.src!==target)return;
+    img.classList.remove('ld');img.style.opacity='0';img.style.visibility='hidden';
+    $('#lbcap').textContent=caption+'（圖片載入失敗，請確認圖片路徑或重新整理頁面）';
   };
-  if(img.src===resolvedSrc&&img.complete&&img.naturalWidth>0){
-    img.classList.add('ld');
-    return;
-  }
-  img.src=resolvedSrc;
-  if(img.complete&&img.naturalWidth>0){
-    img.classList.add('ld');
-  }
+  img.src=target;
+  // Cached images may already have completed before the load handler is observed.
+  if(img.complete){if(img.naturalWidth>0)img.onload();else if(img.naturalWidth===0)img.onerror()}
 }
 function openL(b){
   var g=b.dataset.group,root=b.closest('.n-frag')||document;
@@ -1237,7 +1227,7 @@ function openL(b){
   showL(set.indexOf(b));
   $('#lbx').focus();
 }
-function closeL(){showL._req=(showL._req||0)+1;img.onload=null;img.onerror=null;img.classList.remove('ld');img.removeAttribute('src');if(lb.open)lb.close();if(from)from.focus()}
+function closeL(){if(lb.open)lb.close();if(from)from.focus()}
 $('#lbx').addEventListener('click',closeL);
 $('#lbp').addEventListener('click',function(){showL(at-1)});
 $('#lbn').addEventListener('click',function(){showL(at+1)});
