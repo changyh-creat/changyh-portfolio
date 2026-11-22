@@ -485,7 +485,7 @@ nav.toc .prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;background
 @keyframes cardin{from{opacity:0;transform:translateY(10px)}}
 .js .rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 .js .rv.in{opacity:1;transform:none}
-#lbimg{transition:opacity .2s ease}#lbimg:not(.ld){opacity:0}
+#lbimg{transition:opacity .2s ease}#lbimg:not(.ld){opacity:0}#lbimg.ld{opacity:1}
 dialog.lb[open]{animation:lbin .22s ease}dialog.lb[open]::backdrop{animation:bdin .22s ease}
 @keyframes lbin{from{opacity:0;transform:translateY(8px) scale(.985)}}@keyframes bdin{from{opacity:0}}
 @media (max-width:640px){.amb .b1{left:-34%;top:-6%}.amb .b2{right:-38%;top:14%}.amb .b3{left:6%;top:42%}.fab .fab-top{width:44px;height:44px}}
@@ -1191,16 +1191,42 @@ function cap(b){return b.dataset.cap||($('img',b)||{}).alt||''}
 function showL(n){
   if(!set.length)return;
   at=(n+set.length)%set.length;
-  var b=set[at],i=$('img',b),source=i&&(i.currentSrc||i.src||i.getAttribute('src'));
+  var b=set[at],i=$('img',b),rawSrc=i&&(i.getAttribute('src')||i.currentSrc||i.src);
   sc.classList.remove('big');$('#lbz').textContent='放大看字';
-  img.onload=null;img.onerror=function(){img.style.visibility='hidden';$('#lbcap').textContent=cap(b)+'（圖片載入失敗，請重新整理頁面）'};
-  img.style.visibility='visible';img.alt=cap(b);
-  if(source){
-    try{img.src=new URL(source,document.baseURI).href}
-    catch(err){img.src=source}
-  }else{img.removeAttribute('src');img.style.visibility='hidden'}
+  sc.scrollTop=sc.scrollLeft=0;
+  img.onload=null;
+  img.onerror=null;
+  img.classList.remove('ld');
+  img.style.visibility='visible';
+  img.alt=cap(b);
   $('#lbcap').textContent=cap(b)+(set.length>1?'（'+(at+1)+' / '+set.length+'）':'');
   $('#lbp').hidden=$('#lbn').hidden=set.length<2;
+  if(!rawSrc){
+    img.removeAttribute('src');
+    img.style.visibility='hidden';
+    return;
+  }
+  var resolvedSrc=rawSrc;
+  try{resolvedSrc=new URL(rawSrc,document.baseURI).href}catch(err){}
+  var reqId=(showL._req=(showL._req||0)+1);
+  img.onload=function(){
+    if(showL._req!==reqId)return;
+    img.classList.add('ld');
+  };
+  img.onerror=function(){
+    if(showL._req!==reqId)return;
+    img.classList.remove('ld');
+    img.style.visibility='hidden';
+    $('#lbcap').textContent=cap(b)+'（圖片載入失敗，請重新整理頁面）';
+  };
+  if(img.src===resolvedSrc&&img.complete&&img.naturalWidth>0){
+    img.classList.add('ld');
+    return;
+  }
+  img.src=resolvedSrc;
+  if(img.complete&&img.naturalWidth>0){
+    img.classList.add('ld');
+  }
 }
 function openL(b){
   var g=b.dataset.group,root=b.closest('.n-frag')||document;
@@ -1211,7 +1237,7 @@ function openL(b){
   showL(set.indexOf(b));
   $('#lbx').focus();
 }
-function closeL(){if(lb.open)lb.close();if(from)from.focus()}
+function closeL(){showL._req=(showL._req||0)+1;img.onload=null;img.onerror=null;img.classList.remove('ld');img.removeAttribute('src');if(lb.open)lb.close();if(from)from.focus()}
 $('#lbx').addEventListener('click',closeL);
 $('#lbp').addEventListener('click',function(){showL(at-1)});
 $('#lbn').addEventListener('click',function(){showL(at+1)});
